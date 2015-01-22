@@ -1,0 +1,4 @@
+name,last_name,email,password,state,account
+DIEGO,NUÑEZ,diego@gmail.com,0,,USER
+HUGO,JURADO,hjurado@gmail.com,ciracus,,ADMINISTRATOR
+JULIO,BOLADO,jbolado@gmail.com,123456,,USER

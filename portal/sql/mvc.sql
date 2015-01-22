@@ -38,17 +38,17 @@ INSERT INTO `personas` (`cedula`, `nombre`, `apellido`, `sexo`, `fechanacimiento
 -- Volcando estructura para tabla mvc.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) DEFAULT NULL,
-  `apellido` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `clave` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `state` char(1) DEFAULT NULL,
+  `account` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla mvc.usuarios: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla mvc.usuarios: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `email`, `clave`) VALUES
-	(1, 'HUGO', 'JURADO', 'hugojuradogarcia@gmail.com', '25947202');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
