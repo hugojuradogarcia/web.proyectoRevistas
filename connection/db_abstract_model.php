@@ -1,5 +1,5 @@
-<?php 
-
+<?php
+ 
 abstract class DBAbstractModel
 {
 
@@ -9,6 +9,7 @@ abstract class DBAbstractModel
 	protected $db_name = 'mvc';
 	protected $query;
 	protected $rows = array();
+	protected $row;
 	private $conn;
 
 	// métodos abstractos para de clases que hereden 
@@ -48,11 +49,15 @@ abstract class DBAbstractModel
 		$this->open_connection();
 		$result = $this->conn->query($this->query);
 
-		while( $this->rows[] = $result->fetch_assoc() );
+		while( $row = $result->fetch_assoc() )
+		{	
+			$this->rows[] = $row;
+		}
+
 		$result->close();
 		$this->close_connection();
 		// eliminamos el ultimo elemento del array
-		array_pop($this->rows);
+		//array_pop($this->rows);
 	}
 
 }

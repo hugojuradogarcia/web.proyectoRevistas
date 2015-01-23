@@ -4,12 +4,18 @@ require_once('../connection/db_abstract_model.php');
 
 class Usuario extends DBAbstractModel
 {
-	public $name;
-	public $last_name;
-	public $email;
-	public $user_existing;
-	private $password;
-	protected $id;
+	public 		$name 		= 	"";
+	public 		$last_name 	=	"";
+	public 		$email 		= 	"";
+	private 	$password;
+	public  	$state		=  	"";
+
+	protected	$id 		=	"";
+
+	public 		$rows_dimension = array();
+	public 		$user_created = 0;
+	public 		$user_uncreated = 0;
+	public 		$list_user_uncreated = array();
 
 	function __construct()
 	{
@@ -24,25 +30,40 @@ class Usuario extends DBAbstractModel
 	// SELECT
 	public function get($user_email='')
 	{
-		echo $user_email;
 		if( $user_email != '' ):
 			$this->query = "
-			SELECT id, name, last_name, email, password
-			FROM usuarios
-			WHERE email = '$user_email'
+				SELECT 		id, name, last_name, email, password, state
+				FROM 		usuarios
+				WHERE 		email = '$user_email'
 			";
 			$this->get_results_from_query();
-		endif;
-echo count($this->rows);
-		if ( count($this->rows) == 1 ):
-			foreach( $this->rows[0] as $propiedad=>$valor):
-				$this->$propiedad = $valor;
-			endforeach;
-			
 
-			
-			
+		else:
+			$this->query = "
+				SELECT 		id, name, last_name, email, password, state
+				FROM 		usuarios	
+			";
+			$this->get_results_from_query();
+
 		endif;
+
+		$i = 0;
+		if ( count( $this->rows ) > 0 ):
+			while ( $i < count( $this->rows ) ):
+				
+				$this->id 			= $this->rows[$i]["id"];
+				$this->name 		= $this->rows[$i]["name"];
+				$this->last_name 	= $this->rows[$i]["last_name"];
+				$this->email 		= $this->rows[$i]["email"];
+				$this->state 		= $this->rows[$i]["state"];
+				$i ++;
+
+				$this->rows_dimension = array(
+					array( $i , "name", $this->name ) 
+					);
+			endwhile;
+
+		endif;	
 	}
 
 	// INSERT
@@ -52,10 +73,11 @@ echo count($this->rows);
 
 			// Consultamos si se encuentra 
 			$this->get( $user_data['email'] );
-			//echo $user_data['email'];
-			echo $this->user_existing;
+
+			
+
 			// Si no se encuantra ejecutamos el INSERT
-			if( $this->user_existing != $user_data['email'] ):
+			if( $this->email != $user_data['email'] ):
 				// Si esta vacio se ejecuta el query	
 				if ( $user_data['email'] != '' || $user_data['email'] != NULL ):
 						
@@ -69,12 +91,15 @@ echo count($this->rows);
 						VALUES 
 						( '$name', '$last_name', '$email', '$password', '$state', '$account' )";
 					$this->execute_single_query();
+
+					# Contamos los usuarios CREADOS
+					$this->user_created ++;
 				endif;
 
 			else:
-				$message 	=	"<div class='text-danger'>".$user_data['email']."</div></br>";
-
-				//echo $message;
+				# Contamos los usuarios NO CREADOS
+				$this->list_user_uncreated[ $this->user_uncreated ] = $user_data['email']; 
+				$this->user_uncreated ++;
 			endif;
 		endif;
 	}

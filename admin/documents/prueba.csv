@@ -1,4 +1,5 @@
-name,last_name,email,password,state,account
-DIEGO,NUÑEZ,diego@gmail.com,0,,USER
-HUGO,JURADO,hjurado@gmail.com,ciracus,,ADMINISTRATOR
-JULIO,BOLADO,jbolado@gmail.com,123456,,USER
+name,last_name,email,password,state
+HUGO,JURADO GARCIA,hjurado@gmail.com,123456,ENABLED
+CESAR,OCHO,cesar@gmail.com,215461,ENABLED
+JULIO,BOLADO,jbolado@gmail.com,123456,DISABLED
+CHRISTIAN,LAZO,clazo@gmail.com,524163,ENABLED
