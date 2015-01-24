@@ -1,0 +1,197 @@
+a {
+color: #2CC185;
+color: #488AB8;
+outline: none;
+text-decoration: none;
+}
+
+a:hover,
+a:focus {
+color: #74777b;
+outline: none;
+text-decoration: none;
+}
+
+/*
+@media screen and (max-width: 1024px) {
+}
+*/
+
+.content {
+background-color: #488AB8;
+background-color: #6E6E6E;
+background-color: #E7ECEA;
+padding: 0px;
+width: 100%;
+}
+
+/**********************************************************************************************************/
+/* Main */
+.main {
+background: url(../img/background.png) no-repeat fixed center;
+background-size: cover;
+height: auto;
+margin: 0 auto;
+min-height: 800px;
+text-align: center;
+width: 100%;
+}
+
+.main > section {
+/* padding: 150px 0; */
+font-size: 20px;
+min-height: 100%;
+}
+
+/**********************************************************************************************************/
+div.loading {
+padding: 5px;
+text-align: center;
+}
+
+div.center {
+text-align: center;
+}
+
+div.message {
+background-color: #F5BBB8;
+border: 2px solid #C72500;
+border-radius: 5px;
+color: #C72500;
+font-size: 14px;
+margin: 20px 0;
+padding: 10px 20px;
+text-align: left;
+}
+
+div.message h1 {
+color: #C72500;
+font-size: 18px;
+text-align: left;
+}
+
+/**********************************************************************************************************/
+/* Header */
+/*
+.codrops-header {
+	padding: 0;
+	letter-spacing: -1px;
+}
+
+.codrops-header h1 {
+	font-weight: 800;
+	font-size: 3.5em;
+	line-height: 1;
+	margin: 0;
+}
+
+.codrops-header h1 span {
+	display: block;
+	font-size: 35%;
+	letter-spacing: 1px;
+	padding-top: 0.75em;
+	color: #afb3b8;
+}
+*/
+
+/* To Navigation Style */
+/*
+.codrops-links {
+	text-transform: uppercase;
+	font-weight: 300;
+	font-size: 1.25em;
+}
+
+.codrops-links a {
+	display: inline-block;
+	padding: 0.5em 0;
+	margin: 0.5em;
+	text-decoration: none;
+	letter-spacing: 1px;
+}
+
+.codrops-icon span {
+	display: none;
+}
+
+.codrops-icon:before {
+	margin: 0 4px;
+	text-transform: none;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-family: 'codropsicons';
+	line-height: 1;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+.codrops-icon-drop:before {
+	content: "\e001";
+}
+
+.codrops-icon-prev:before {
+	content: "\e004";
+}
+*/
+
+/* Codrops demo links */
+/*
+.codrops-demos {
+	margin: 3em auto;
+	max-width: 700px;
+}
+
+.codrops-demos a {
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	padding: 0.25em 0;
+	margin: 5px 10px;
+	display: inline-block;
+	font-size: 0.85em;
+}
+
+.codrops-demos a.current-demo {
+	opacity: 0.5;
+}
+*/
+
+/* Related demos */
+/*
+.related {
+	text-align: center;
+	padding: 10em 0;
+	clear: both;
+	font-weight: bold;
+}
+
+.related > a {
+	width: 200px;
+	display: inline-block;
+	text-align: center;
+	margin: 1em;
+	font-size: 0.8em;
+	vertical-align: top;
+}
+
+.related a img {
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+.related a:hover img,
+.related a:active img {
+	opacity: 1;
+}
+
+.related a h3 {
+	margin: 0;
+	font-size: ;
+	padding: 0.5em 0 0.3em;
+	max-width: 200px;
+	text-align: left;
+}
+*/
+
+/**********************************************************************************************************/

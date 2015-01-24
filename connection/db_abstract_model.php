@@ -3,7 +3,7 @@
 abstract class DBAbstractModel
 {
 
-	private static $db_host = 'localhost';
+	private static $db_host = '192.168.10.5';
 	private static $db_user = 'root';
 	private static $db_pass = '';
 	protected $db_name = 'mvc';
