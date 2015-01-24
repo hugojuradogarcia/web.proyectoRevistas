@@ -153,10 +153,12 @@ endif;
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Upload CSV to MySQL</title>
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.css">
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -178,7 +180,8 @@ endif;
 				echo $message; 
 			?>
 			<input type="file" name="file" id="file" class="btn btn-default"/>
-			<button type="submit" class="btn btn-info">Subir archivo</button>
+			<button type="submit" class="btn btn-info"><i class="fa fa-user-plus"></i>
+Subir archivo</button>
 			
 			
 
@@ -237,7 +240,8 @@ endif;
 
 			</div>
 
-			<button type="submit" class="btn btn-info" name="submit-record-single">Crear Usuario</button>	
+			<button type="submit" class="btn btn-info" name="submit-record-single"><i class="fa fa-user-plus"></i>
+Crear Usuario</button>	
 
 		</form>
 	</section>

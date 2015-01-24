@@ -37,7 +37,6 @@ class Usuario extends DBAbstractModel
 				WHERE 		email = '$user_email'
 			";
 			$this->get_results_from_query();
-
 		else:
 			$this->query = "
 				SELECT 		id, name, last_name, email, password, state
@@ -56,11 +55,16 @@ class Usuario extends DBAbstractModel
 				$this->last_name 	= $this->rows[$i]["last_name"];
 				$this->email 		= $this->rows[$i]["email"];
 				$this->state 		= $this->rows[$i]["state"];
-				$i ++;
+				
 
-				$this->rows_dimension = array(
-					array( $i , "name", $this->name ) 
-					);
+				$this->rows_dimension[ $i ]["id"] = $this->id ;
+				$this->rows_dimension[ $i ]["name"] = $this->name ;
+				$this->rows_dimension[ $i ]["last_name"] = $this->last_name ;
+				$this->rows_dimension[ $i ]["email"] = $this->email ;
+				$this->rows_dimension[ $i ]["password"] = $this->password ;
+				$this->rows_dimension[ $i ]["state"] = $this->state ;
+
+				$i ++;
 			endwhile;
 
 		endif;	
@@ -73,8 +77,7 @@ class Usuario extends DBAbstractModel
 
 			// Consultamos si se encuentra 
 			$this->get( $user_data['email'] );
-
-			
+			$this->encrypting( );
 
 			// Si no se encuantra ejecutamos el INSERT
 			if( $this->email != $user_data['email'] ):
@@ -116,7 +119,8 @@ class Usuario extends DBAbstractModel
 			SET 	name='$name',
 					last_name='$last_name',
 					email='$email',
-					password=$password
+					password='$password',
+					state='$state'
 			WHERE 	email = '$email'
 			";
 		$this->execute_single_query();
@@ -130,6 +134,15 @@ class Usuario extends DBAbstractModel
 			WHERE 			email = '$user_email'
 			";
 			$this->execute_single_query();
+	}
+
+	// ENCRYPTING PASSWORD
+	private function encrypting( $password )
+	{
+
+		$this->_pass = hash('sha1', $password);
+
+		return $this->password;
 	}
 }
 
