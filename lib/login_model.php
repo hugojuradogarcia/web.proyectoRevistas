@@ -22,7 +22,7 @@ class Login extends DBAbstractModel
 
 	function __destruct()
 	{
-		unset($this);
+		unset( $this );
 	}
 	
 	// LOGIN
@@ -39,31 +39,24 @@ class Login extends DBAbstractModel
 	public function browseUser()
 	{    
 
-		if ( $this->_user && $this->_password ):
+		$this->query = "
+			SELECT 		name, email, password, account
+			FROM 		usuarios 
+			WHERE 		email = '$this->_user' 
+			AND 		password =  '$this->_password' ";
+		$this->get_results_from_query();
 
-			$this->query = "
-				SELECT 		name, email, password, account
-				FROM 		usuarios 
-				WHERE 		email = '$this->_user' 
-				AND 		password =  '$this->_password' ";
-			$this->get_results_from_query();
+		if( count($this->rows) == 1 ):
 
-			if( count($this->rows) <> 0 ):
-				echo "Validado con EXITO: ";
-				echo $this->rows[0];
-				if ( count($this->rows) == 1 ):
-					foreach( $this->rows[0] as $valor):
-						$propiedad[] = $valor;
-					endforeach;
-				endif;
+			foreach( $this->rows[0] as $valor):
+				$propiedad[] = $valor;
+			endforeach;
 
-				$this->_name = $propiedad[0];
-				$this->_nivel = $propiedad[3];
+			$this->_name = $propiedad[0];
+			$this->_nivel = $propiedad[3];
 
-			else:
-				//header('Location: ../login.php');
-
-			endif;
+		else:
+			header('Location: ../portal/index.php');
 
 		endif;
 	}

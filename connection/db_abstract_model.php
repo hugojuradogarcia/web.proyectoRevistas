@@ -3,14 +3,14 @@
 abstract class DBAbstractModel
 {
 
-	private static $db_host = 'localhost';
-	private static $db_user = 'root';
-	private static $db_pass = '';
-	protected $db_name = 'mvc';
-	protected $query;
-	protected $rows = array();
-	protected $row;
-	private $conn;
+	private static 	$db_host = 'localhost';
+	private static 	$db_user = 'root';
+	private static 	$db_pass = '';
+	protected 		$db_name = 'mvc';
+	protected 		$query;
+	protected 		$rows = array();
+	protected 		$row;
+	private 		$conn;
 
 	// métodos abstractos para de clases que hereden 
 	/*abstract protected function get();
