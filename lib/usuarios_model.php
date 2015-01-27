@@ -12,6 +12,7 @@ class Usuario extends DBAbstractModel
 
 	protected	$id 		=	"";
 
+	public 		$row 		= 0;
 	public 		$rows_dimension = array();
 	public 		$user_created = 0;
 	public 		$user_uncreated = 0;
@@ -46,6 +47,9 @@ class Usuario extends DBAbstractModel
 
 		endif;
 
+		// COUNT user
+		$this->row = count( $this->rows );
+
 		$i = 0;
 		if ( count( $this->rows ) > 0 ):
 			while ( $i < count( $this->rows ) ):
@@ -77,7 +81,7 @@ class Usuario extends DBAbstractModel
 
 			// Consultamos si se encuentra 
 			$this->get( $user_data['email'] );
-			$this->encrypting( );
+			$this->encrypting( $user_data['password'] );
 
 			// Si no se encuantra ejecutamos el INSERT
 			if( $this->email != $user_data['email'] ):
@@ -92,7 +96,7 @@ class Usuario extends DBAbstractModel
 						INSERT INTO 	usuarios
 						( name, last_name, email, password, state, account )
 						VALUES 
-						( '$name', '$last_name', '$email', '$password', '$state', '$account' )";
+						( '$name', '$last_name', '$email', '$this->password', '$state', '$account' )";
 					$this->execute_single_query();
 
 					# Contamos los usuarios CREADOS
@@ -108,9 +112,13 @@ class Usuario extends DBAbstractModel
 	}
 
 	// EDIT
-	public function edit( $user_data=array())
+	public function edit( $user_data=array() )
 	{
-		foreach ($user_data as $campo => $valor):
+		# Checar si se encuentra el email registrado
+		$this->get( $user_data['email'] );
+		$this->encrypting( $user_data['password'] );
+
+		foreach ( $user_data as $campo => $valor ):
 			$$campo = $valor;
 		endforeach;
 
@@ -119,19 +127,20 @@ class Usuario extends DBAbstractModel
 			SET 	name='$name',
 					last_name='$last_name',
 					email='$email',
-					password='$password',
+					password='$this->password',
 					state='$state'
-			WHERE 	email = '$email'
+			WHERE 	id = '$id'
 			";
 		$this->execute_single_query();
+
 	}
 
 	// DELETE
-	public function delete()
+	public function delete( $id )
 	{
 		$this->query = "
 			DELETE FROM 	usuarios
-			WHERE 			email = '$user_email'
+			WHERE 			id = '$id'
 			";
 			$this->execute_single_query();
 	}
@@ -139,10 +148,7 @@ class Usuario extends DBAbstractModel
 	// ENCRYPTING PASSWORD
 	private function encrypting( $password )
 	{
-
-		$this->_pass = hash('sha1', $password);
-
-		return $this->password;
+		$this->password = hash('sha1', $password);
 	}
 }
 

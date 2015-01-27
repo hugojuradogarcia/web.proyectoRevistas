@@ -5,6 +5,12 @@
 	$usuario = new Usuario();
 
 	$usuario->get();
+
+
+	// Eliminar USUARIO
+	if ( !empty( $_GET['id'] )) :
+		$usuario->delete( $_GET['id'] );
+	endif;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +22,11 @@
 	<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.css">
 </head>
 <body>
+	<!-- ALERT-->
+	<?php if ( isset( $_GET['status'] ) == 'edit-user' ) :?>
+	<div class="alert alert-success">Se edito correctamente el usuario <strong><?php echo $_GET['email'] ?></strong>.</div>
+	<?php endif; ?>
+
 	<div class="col-md-12">
 		<section class="table-responsive">
 			<table class="table table-bordered table-hover table-condensed">
@@ -37,7 +48,7 @@
 							<a href="edit-user.php?email=<?php echo $usuario->rows_dimension[$i]["email"]; ?>" class="btn btn-info">
 								<i class="fa fa-pencil-square-o"></i>
 							</a>
-							<a href="" class="btn btn-danger">
+							<a href="usuarios.php?id=<?php echo $usuario->rows_dimension[$i]["id"]; ?>" class="btn btn-danger">
 								<i class="fa fa-user-times"></i>
 							</a>							
 						</td>
