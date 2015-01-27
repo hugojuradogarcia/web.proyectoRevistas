@@ -1,6 +1,5 @@
-<?php  
-
-require_once('../connection/db_abstract_model.php');
+<?php
+require_once ("db_abstract_model.php");
 
 class Login extends DBAbstractModel
 {
@@ -15,7 +14,6 @@ class Login extends DBAbstractModel
 	function __construct( $user = '', $password = '' )
 	{
 		$this->db_name = 'mvc';
-
 		$this->_user = $user;
 		$this->_password = $password;
 	}
@@ -38,19 +36,17 @@ class Login extends DBAbstractModel
 	// BROWSE USER
 	public function browseUser()
 	{    
+		if ($this->_user && $this->_password):
 
-		if ( $this->_user && $this->_password ):
-
-			$this->query = "
-				SELECT 		name, email, password, account
-				FROM 		usuarios 
-				WHERE 		email = '$this->_user' 
-				AND 		password =  '$this->_password' ";
+			$this->query = "SELECT name, email, password, account 
+							FROM usuarios 
+							WHERE email = '$this->_user'
+							AND password = '$this->_password'";
 			$this->get_results_from_query();
 
-			if( count($this->rows) <> 0 ):
-				echo "Validado con EXITO: ";
-				echo $this->rows[0];
+			if(count($this->rows) <> 0 ):
+				//echo "Validado con EXITO: ";
+				//echo $this->rows[0];
 				if ( count($this->rows) == 1 ):
 					foreach( $this->rows[0] as $valor):
 						$propiedad[] = $valor;

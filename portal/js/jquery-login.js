@@ -23,39 +23,39 @@ $(document).ready(function(){
 		}
 	});
 
-	
 /***************************************************************************************/
 	$("#frmLogin").submit(function(event){
-		$(".loading").show();
-		$(".message").show();
 		event.preventDefault(); //No se envia el formulario.
+		$(".loading").show();
+		$(".message").hide();
 
 		//Enviamos el formulario por Metodo POST
 		$.post("actions/login.php", $(this).serialize(), function(data){
-			/*
-			if(!data.error){
-				$("#loading").hide();
-				window.location = "home.php";
+			$(".message").show();
+			$(".loading").hide();
+			//$(".message").html(data);
+
+			if(data == true){
+				$(".message").html("<h1>Ingresando...</h1>");
+				$(".loading").show();
+				setTimeout(function(){
+					window.location = "home.php";
+				}, 2000);
 			}else{
-				$("#loading").hide();
-				$("#mensaje").show();
-				$("#mensaje").html("<h1>Usuario y/o Password Incorrecto.</h1>");
+				$(".message").html("<h1>Usuario y/o Password Incorrecto.</h1>");
 			}
-			*/
-			$(".message").html(data);
 		}); //Fin de $.post
 	}); //Fin de .submit
-
 
 /***************************************************************************************/
 	/*
 	$("#frmLogin").submit(function(event){
 		event.preventDefault(); //No se envia el formulario.
-		//$("#loading").show();
-		$("#mensaje").hide();
+		$(".loading").show();
+		$(".message").hide();
 
 		//Enviamos el formulario por Metodo POST
-		$.post("pages/login.php", $(this).serialize(), function(resp){
+		$.post("actions/login.php", $(this).serialize(), function(resp){
 			if(!resp.error){
 				$("#loading").hide();
 				window.location = "home.php";
