@@ -5,19 +5,22 @@ require_once('../connection/db_abstract_model.php');
 class Login extends DBAbstractModel
 {
 	// DEFINIENDO ATRIBUTOS
-	private $_name;
-	private $_user;
-	private $_password;
-	private $_nivel;
-	private $_status = false;
+	private $name;
+	private $user;
+	private $password;
+	private $state;
+	private $account;
+	private $status = false;
+
+	
 
 	// METODOS MAGICOS
 	function __construct( $user = '', $password = '' )
 	{
 		$this->db_name = 'mvc';
 
-		$this->_user = $user;
-		$this->_password = $password;
+		$this->user = $user;
+		$this->encrypting( $password );
 	}
 
 	function __destruct()
@@ -38,9 +41,8 @@ class Login extends DBAbstractModel
 	// BROWSE USER
 	public function browseUser()
 	{    
-
 		$this->query = "
-			SELECT 		name, email, password, account
+			SELECT 		name, email, password, state, account
 			FROM 		usuarios 
 			WHERE 		email = '$this->_user' 
 			AND 		password =  '$this->_password' ";
@@ -52,11 +54,12 @@ class Login extends DBAbstractModel
 				$propiedad[] = $valor;
 			endforeach;
 
-			$this->_name = $propiedad[0];
-			$this->_nivel = $propiedad[3];
+			$this->name = $propiedad[0];
+			$this->state = $propiedad[3];
+			$this->account = $propiedad[4];
 
 		else:
-			header('Location: ../portal/index.php');
+			header('Location: ../portal/indexp.php');
 
 		endif;
 	}
@@ -73,17 +76,18 @@ class Login extends DBAbstractModel
 	{
 		$this->varSession();
 		$_SESSION["authenticated"] = true;
-		$_SESSION["user"] = $this->_name;
-		$_SESSION["access_level"] = $this->_nivel;
-		$this->_status = true;
+		$_SESSION["user"] = $this->name;
+		$_SESSION["state"] = $this->state;
+		$_SESSION["account"] = $this->account;
+		$this->status = true;
 	}
 
 	// GET STATUS SESSION
 	public function getStatus()
 	{
 		$this->varSession();
-		$this->_status = $_SESSION["authenticated"];
-		return $this->_status;
+		$this->status = $_SESSION["authenticated"];
+		return $this->status;
 	}
 
 	// CLOSE SESSION
@@ -94,8 +98,15 @@ class Login extends DBAbstractModel
 		session_destroy();
 		unset($_SESSION["user"]);
 		unset($_SESSION["authenticated"]);
-		$this->_status;
+		unset($_SESSION["state"]);
+		unset($_SESSION["account"]);
+		$this->status;
 		header("Location: index.php");
+	}
+	// ENCRYPTING PASSWORD
+	private function encrypting( $password )
+	{
+		$this->password = hash('sha1', $password);
 	}
 
 }

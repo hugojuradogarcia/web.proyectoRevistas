@@ -10,7 +10,7 @@
 	/*else:
 		header('Location: usuarios.php');*/
 	endif;
-	
+
 	// EDIT
 	// Registro INDIVIDUAL
 	if ( !empty($_POST['name'] )		&&
@@ -18,7 +18,7 @@
 		 !empty($_POST['email']	)		&&
 		 !empty($_POST['state']	)	 
 		):
-
+		
 		$new_user_data = array(
 			"id"		=>	$_POST['id'], 
 			"name"		=>	mysql_real_escape_string( $_POST['name'] ),
@@ -28,19 +28,17 @@
 			"state"		=>	mysql_real_escape_string( $_POST['state'] )
 		);
 		
-		// Buscamos si existe el correo antes creado			
-		$usuario->get( $new_user_data['email'] );
-		echo $usuario->rows_dimension[0]['email'] ." {} ". $_POST['email'] ;
+		// Buscamos si existe el correo antes creado	
+		$usuario->get( $_POST['email'] );
+
 		# Si no existe ningun email igual 
 		if ( $usuario->row == 0 ) :
 			$usuario->edit( $new_user_data );
 			header( 'Location: usuarios.php?status=edit-user&email='.$_POST['email'] );
-		elseif( $usuario->rows_dimension[0]['email'] == $_POST['email'] && 
-				$usuario->row == 1 ):
-
+		elseif( $usuario->row == 1 && $_POST['email_before'] == $_POST['email'] ):
 			$usuario->edit( $new_user_data );
 			header( 'Location: usuarios.php?status=edit-user&email='.$_POST['email'] );
-		elseif ( $usuario->row > 1 ):
+		elseif ( $usuario->row >= 1 ):
 			header( 'Location: edit-user.php?status=existing-user&email='.$_POST['email'] );
 		endif;
 
@@ -87,6 +85,7 @@
 						<div class="input-group">
 							<span class="input-group-addon">@</span>
 							<input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="<?php echo $usuario->rows_dimension[0]['email']; ?>">
+							<input type="email" class="form-control hidden" id="email_before" name="email_before" placeholder="Email" value="<?php echo $usuario->rows_dimension[0]['email']; ?>">
 						</div>
 					</div>
 				</div>
