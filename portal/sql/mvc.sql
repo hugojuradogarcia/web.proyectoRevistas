@@ -35,20 +35,41 @@ INSERT INTO `personas` (`cedula`, `nombre`, `apellido`, `sexo`, `fechanacimiento
 /*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 
 
+-- Volcando estructura para tabla mvc.session
+CREATE TABLE IF NOT EXISTS `session` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(100) DEFAULT '0',
+  `browse` varchar(100) DEFAULT '0',
+  `ip` varchar(100) DEFAULT '0',
+  `date` varchar(100) DEFAULT '0',
+  `flag` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Volcando datos para la tabla mvc.session: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `session` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla mvc.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `state` char(1) DEFAULT NULL,
+  `password` varchar(250) DEFAULT NULL,
+  `state` varchar(10) DEFAULT NULL,
   `account` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla mvc.usuarios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla mvc.usuarios: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` (`id`, `name`, `last_name`, `email`, `password`, `state`, `account`) VALUES
+	(1, 'HUGO', 'JURADO GARCIA', 'hjurado@gmail.com', '356a192b7913b04c54574d18c28d46e6395428ab', 'ENABLED', 'ADMINISTRATOR'),
+	(2, 'CESAR', 'OCHOA', 'ochoa@gmail.com', '356a192b7913b04c54574d18c28d46e6395428ab', 'ENABLED', 'USER'),
+	(3, 'JULIO', 'BOLADO', 'jbolado@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'DISABLED', 'USER'),
+	(4, 'CHRISTIAN', 'LAZO', 'clazo@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'DISABLED', 'USER');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
