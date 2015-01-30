@@ -13,6 +13,8 @@ $login = new Login( $email , $password );
 
 // Si return = true 
 if( $login->login() ):
-	//header('Location: homep.php');
+	header('Location: homep.php');
+else:
+	header('Location: indexp.php');
 endif;
 ?>

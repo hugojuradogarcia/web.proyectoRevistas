@@ -10,7 +10,7 @@ class Login extends DBAbstractModel
 	private $password;
 	private $state;
 	private $account;
-	private $status = false;
+	public $status = false;
 
 	
 
@@ -34,7 +34,7 @@ class Login extends DBAbstractModel
 		$this->browseUser();
 		$this->newSession();
 
-		return (true);
+		return ( $this->status );
 	}
 
 		
@@ -44,8 +44,8 @@ class Login extends DBAbstractModel
 		$this->query = "
 			SELECT 		name, email, password, state, account
 			FROM 		usuarios 
-			WHERE 		email = '$this->_user' 
-			AND 		password =  '$this->_password' ";
+			WHERE 		email = '$this->user' 
+			AND 		password =  '$this->password' ";
 		$this->get_results_from_query();
 
 		if( count($this->rows) == 1 ):
@@ -74,9 +74,10 @@ class Login extends DBAbstractModel
 	/// NEW SESSION
 	public function newSession()
 	{
-		$this->varSession();
+		//$this->varSession();
 		$_SESSION["authenticated"] = true;
-		$_SESSION["user"] = $this->name;
+		$_SESSION["name"] = $this->name;
+		$_SESSION["user"] = $this->user;
 		$_SESSION["state"] = $this->state;
 		$_SESSION["account"] = $this->account;
 		$this->status = true;
@@ -100,8 +101,8 @@ class Login extends DBAbstractModel
 		unset($_SESSION["authenticated"]);
 		unset($_SESSION["state"]);
 		unset($_SESSION["account"]);
-		$this->status;
-		header("Location: index.php");
+		$this->status = false;
+
 	}
 	// ENCRYPTING PASSWORD
 	private function encrypting( $password )
