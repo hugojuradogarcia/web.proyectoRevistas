@@ -29,7 +29,7 @@ class Usuario extends DBAbstractModel
 	}
 
 	// SELECT
-	public function get($user_email='')
+	public function get($user_email = '' )
 	{
 		if( $user_email != '' ):
 			$this->query = "
