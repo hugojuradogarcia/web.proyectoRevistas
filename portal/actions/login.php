@@ -1,49 +1,28 @@
-<?php
-//require ("../../lib/login_model.php");
-//require_once ("../../lib/login_model.php");
-//include_once ("../../lib/login_model.php");
+<?php 
+require('../../lib/login_model.php');
+require('../../lib/session_model.php');
+require('session.php');
 
-//session_start();
-$user = !empty($_REQUEST["user"]) ? $_REQUEST["user"] : '';
-echo "<h1>User: $user</h1>";
-$password = !empty($_REQUEST["password"]) ? $_REQUEST["password"] : '';
-echo "<h1>Password: $password</h1>";
+session_start();
+$email =! empty( $_REQUEST['email'] )?$_REQUEST['email']:'';
+$password =! empty( $_REQUEST['password'] )?$_REQUEST['password']:'';
+// Obtenemos datos especificos y eliminamos codigo de un posible inyeccion de SQL
+$email = mysql_real_escape_string( $email );
+$password = mysql_real_escape_string( $password );
 
-/*
-$user = !empty($_POST["user"]) ? $_POST["user"] : '';
-echo "<h1>User: $user</h1>";
-$password = !empty($_POST["password"]) ? $_POST["password"] : '';
-echo "<h1>Password: $password</h1>";
-*/
 
-/*
-$user = $_POST['user'];
-echo "<h1>User: $user</h1>";
-$password = $_POST['password'];
-echo "<h1>Password: $password</h1>";
-*/
+// Consruct
+$login = new Login( $email , $password );
 
-//Obtenemos datos especificos y eliminamos codigo de un posible inyeccion de SQL
-$user = mysql_real_escape_string($user);
-echo "<h1>mysql_real_escape_string User: $user</h1>";
-$password = mysql_real_escape_string($password);
-echo "<h1>mysql_real_escape_string Password: $password</h1>";
+// Si return = true 
+if( $login->login() ):
 
-//Obtenemos datos especificos y eliminamos codigo de un posible inyeccion de SQL.
-/*
-Escapa los caracteres especiales de una cadena para usarla en una sentencia SQL,
-tomando en cuenta el conjunto de caracteres actual de la conexión.
-*/
-$user = mysqli_real_escape_string($user);
-echo "<h1>mysqli_real_escape_string User: $user</h1>";
-$password = mysqli_real_escape_string($password);
-echo "<h1>mysqli_real_escape_string Password: $password</h1>";
-
-//Construct
-/*
-$log = new Login($email, $password);
-if($log->login()):
-	header('Location: home.php');
+	$session = new  Session();
+	$session->set_data_session( session( $email ) );
+	
+	header('Location: ../homep.php');
+else:
+	header('Location: ../indexp.php');
 endif;
-*/
+
 ?>

@@ -1,6 +1,6 @@
 <?php  
 
-require_once('../connection/db_abstract_model.php');
+require_once('db_abstract_model.php');
 
 class Login extends DBAbstractModel
 {
@@ -10,7 +10,7 @@ class Login extends DBAbstractModel
 	private $password;
 	private $state;
 	private $account;
-	public $status = false;
+	public 	$status = false;
 
 	
 
@@ -68,7 +68,9 @@ class Login extends DBAbstractModel
 	private function varSession()
 	{
 		session_name("user");
-		session_start();
+		if(!isset($_SESSION)):
+	        session_start(); 
+	    endif; 
 	}
 
 	/// NEW SESSION

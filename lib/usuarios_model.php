@@ -1,6 +1,6 @@
 <?php 
 
-require_once('../connection/db_abstract_model.php');
+require_once('db_abstract_model.php');
 
 class Usuario extends DBAbstractModel
 {
@@ -50,6 +50,8 @@ class Usuario extends DBAbstractModel
 		// COUNT user
 		$this->row = count( $this->rows );
 
+		
+		
 		$i = 0;
 		if ( count( $this->rows ) > 0 ):
 			while ( $i < count( $this->rows ) ):
@@ -124,12 +126,12 @@ class Usuario extends DBAbstractModel
 
 		$this->query = "
 			UPDATE 	usuarios
-			SET 	name='$name',
-					last_name='$last_name',
-					email='$email',
-					password='$this->password',
-					state='$state'
-			WHERE 	id = '$id'
+			SET 	name		=	'$name',
+					last_name	=	'$last_name',
+					email		=	'$email',
+					password	=	'$this->password',
+					state		=	'$state'
+			WHERE 	id 			=	'$id'
 			";
 		$this->execute_single_query();
 
