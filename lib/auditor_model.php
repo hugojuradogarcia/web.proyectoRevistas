@@ -11,6 +11,7 @@ class Auditor extends DBAbstractModel
 	public $page;
 	public $browser;
 	public $ip;
+	public $account;
 
 	function __construct()
 	{
@@ -30,9 +31,9 @@ class Auditor extends DBAbstractModel
 
 		$this->query = "
 			INSERT INTO 	auditor
-			( user, date, route, page, browser, ip )
+			( user, date, route, page, browser, ip, account )
 			VALUES 
-			( '$user', '$date', '$route', '$page', '$browser', '$ip' ) 
+			( '$user', '$date', '$route', '$page', '$browser', '$ip', '$account' ) 
 		";
 		$this->execute_single_query();
 	}

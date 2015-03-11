@@ -1,4 +1,17 @@
 <?php 
+	// Validar Session
+	require_once('../lib/status.php');
+
+	$status = new Status();
+	/* SESSION */
+	if( !$status->state_admin() ) :
+		header( 'Location: actions/logout.php');
+	endif;
+	/* AUDITOR */
+	$status->auditor( $_SERVER['SCRIPT_NAME'] , 'EDITAR USUARIO ADMIN' );
+
+?>
+<?php 
 
 	require_once('../lib/usuarios_model.php');
 
@@ -56,72 +69,79 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.css">
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 	<div class="col-md-12">
+
+		<div class="col-md-2">
+			<?php require('menu.php'); ?>
+		</div>
+		<div class="col-md-10">
 		<!-- ALERT-->
 		<?php if ( isset( $_GET['status'] ) == 'existing-user' ) :?>
 		<div class="alert alert-danger">Email: <strong><?php echo $_GET['email'] ?></strong> existente.</div>
 		<?php endif; ?>
-		<section>
-			<h3>Editar Usuario</h3>
-			<form action="edit-user.php" method="post" name="record-single" role="form">
-				 
-				<input type="text" class="form-control hidden" id="id" name="id"  onkeyup="this.value=this.value.toUpperCase()" value="<?php echo $usuario->rows_dimension[0]['id']; ?>">
-				
-				<div class="row">
-					<div class="col-md-4">
-						<label for="name">Nombre:</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required  onkeyup="this.value=this.value.toUpperCase()" value="<?php echo $usuario->rows_dimension[0]['name']; ?>">
-					</div>
+			<section class="border-top">
+				<h3>Editar Usuario</h3>
+				<form action="edit-user.php" method="post" name="record-single" role="form">
+					 
+					<input type="text" class="form-control hidden" id="id" name="id"  onkeyup="this.value=this.value.toUpperCase()" value="<?php echo $usuario->rows_dimension[0]['id']; ?>">
 					
-					<div class="col-md-4">
-						<label for="last_name">Apellidos:</label>
-						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" required  onkeyup="this.value=this.value.toUpperCase()" value="<?php echo $usuario->rows_dimension[0]['last_name']; ?>">
-					</div>
-					
-					<div class="col-md-4">	
-						<label for="email">Email:</label>
-						<div class="input-group">
-							<span class="input-group-addon">@</span>
-							<input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="<?php echo $usuario->rows_dimension[0]['email']; ?>">
-							<input type="email" class="form-control hidden" id="email_before" name="email_before" placeholder="Email" value="<?php echo $usuario->rows_dimension[0]['email']; ?>">
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					
-					<div class="col-md-4">	
-						<label for="password">Contraseña:</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
-					</div>
-					
-					<div class="col-md-4">
-						<label for="state">Estado:</label>
-						<div class="radio">
-							<label>
-								<input type="radio" id="state-enabled" name="state" value="ENABLED" required>
-								ENABLED
-							</label>
-						</div>
-					
-						<div class="radio">
-							<label>
-								<input type="radio" id="state-disabled" name="state" value="DISABLED" required>
-								DISABLED
-							</label>
+					<div class="row">
+						<div class="col-md-4">
+							<label for="name">Nombre:</label>
+							<input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required  onkeyup="this.value=this.value.toUpperCase()" value="<?php echo $usuario->rows_dimension[0]['name']; ?>">
 						</div>
 						
+						<div class="col-md-4">
+							<label for="last_name">Apellidos:</label>
+							<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" required  onkeyup="this.value=this.value.toUpperCase()" value="<?php echo $usuario->rows_dimension[0]['last_name']; ?>">
+						</div>
+						
+						<div class="col-md-4">	
+							<label for="email">Email:</label>
+							<div class="input-group">
+								<span class="input-group-addon">@</span>
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="<?php echo $usuario->rows_dimension[0]['email']; ?>">
+								<input type="email" class="form-control hidden" id="email_before" name="email_before" placeholder="Email" value="<?php echo $usuario->rows_dimension[0]['email']; ?>">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col-md-4">	
+							<label for="password">Contraseña:</label>
+							<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+						</div>
+						
+						<div class="col-md-4">
+							<label for="state">Estado:</label>
+							<div class="radio">
+								<label>
+									<input type="radio" id="state-enabled" name="state" value="ENABLED" required>
+									ENABLED
+								</label>
+							</div>
+						
+							<div class="radio">
+								<label>
+									<input type="radio" id="state-disabled" name="state" value="DISABLED" required>
+									DISABLED
+								</label>
+							</div>
+							
+
+						</div>
 
 					</div>
 
-				</div>
+					<button type="submit" class="btn btn-info" name="submit-record-single"><i class="fa fa-user-plus"></i>
+		Editar Usuario</button>	
 
-				<button type="submit" class="btn btn-info" name="submit-record-single"><i class="fa fa-user-plus"></i>
-	Editar Usuario</button>	
-
-			</form>
-		</section>
+				</form>
+			</section>
+		</div>
 	</div>
 	
 	<!-- Verificar Email -->

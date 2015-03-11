@@ -1,5 +1,5 @@
 <?php 
-require('../../lib/login_model.php');
+require('../../lib/login_admin_model.php');
 require('../../lib/session_model.php');
 
 session_start();
@@ -11,16 +11,15 @@ $password = mysql_real_escape_string( $password );
 
 
 // Consruct
-$login = new Login( $email , $password );
+$login = new Login_admin( $email , $password );
 
 // Si return = true 
 if( $login->login() ):
 	$session = new  Session();
 	$session->set_data_session( $session->session_values( $email ) );
 	/* portal/actions */
-	header('Location: ../homep.php');
+	header('Location: ../registro.php');
 else:
-	header('Location: ../indexp.php');
+	header('Location: ../access.php?error=access');
 endif;
-
 ?>

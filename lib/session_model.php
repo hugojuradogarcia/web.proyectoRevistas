@@ -28,6 +28,17 @@ class Session extends DBAbstractModel
 		unset( $this );
 	}
 
+	public function session_values( $email )
+	{
+		$new_user_session = array(
+		"email" 		=> $email ,
+		"session_id" 	=> session_id() ,
+		"date" 			=> date('Y-m-d') ,
+		"flag"			=> 1 );
+
+		return ( $new_user_session );
+	}
+
 	public function get_data_session( $user_email = '' )
 	{
 		if ( !empty( $user_email ) ):

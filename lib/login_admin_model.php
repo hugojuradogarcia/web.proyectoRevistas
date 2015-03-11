@@ -1,9 +1,8 @@
 <?php  
 
 require_once('db_abstract_model.php');
-require_once('login_admin_model.php');
 
-class Login extends DBAbstractModel
+class Login_admin extends DBAbstractModel
 {
 	// DEFINIENDO ATRIBUTOS
 	private $name;
@@ -11,6 +10,10 @@ class Login extends DBAbstractModel
 	private $password;
 	private $state;
 	private $account;
+	private $company;
+	public $days;
+	public $start_time;
+	public $end_time;
 
 	public 	$status = FALSE;
 
@@ -19,10 +22,11 @@ class Login extends DBAbstractModel
 	// METODOS MAGICOS
 	function __construct( $user = '', $password = '' )
 	{
-		$this->db_name = 'mvc';
+		$this->db_name = 'superuser';
 
 		$this->user = $user;
 		$this->encrypting( $password );
+		$this->company = 'GDC';
 	}
 
 	function __destruct()
@@ -33,7 +37,7 @@ class Login extends DBAbstractModel
 	// LOGIN
 	public function login()
 	{
-		$this->date();
+		$this->browseUser();
 		return ( $this->status );		
 	}
 
@@ -42,10 +46,13 @@ class Login extends DBAbstractModel
 	public function browseUser()
 	{    
 		$this->query = "
-			SELECT 		name, email, password, state, account
-			FROM 		usuarios 
+			SELECT 		name, email, password, state, account, days, start_time, end_time
+			FROM 		administrator 
 			WHERE 		email		= '$this->user' 
-			AND 		password 	= '$this->password' ";
+			AND 		password 	= '$this->password'
+			AND 		company 	= '$this->company'
+		";
+		
 		$this->get_results_from_query();
 
 		if( count($this->rows) == 1 ):
@@ -54,12 +61,36 @@ class Login extends DBAbstractModel
 				$propiedad[] = $valor;
 			endforeach;
 
-			$this->name = $propiedad[0];
-			$this->state = $propiedad[3];
-			$this->account = $propiedad[4];
+			$this->name 		= $propiedad[0];
+			$this->state 		= $propiedad[3];
+			$this->account 		= $propiedad[4];
 
 			$this->newSession();
 		endif;
+	}
+
+	public function browseDateCompany()
+	{
+		$this->query = "
+			SELECT 		days, start_time, end_time
+			FROM 		administrator
+			WHERE		company = '$this->company'
+		";
+
+		$this->get_results_from_query();
+
+		if( count($this->rows) == 1 ):
+
+			foreach( $this->rows[0] as $valor):
+				$propiedad[] = $valor;
+			endforeach;
+
+			$this->days 		= $propiedad[0];
+			$this->start_time	= $propiedad[1];
+			$this->end_time		= $propiedad[2];	
+
+		endif;
+
 	}
 
 	// SESSION START
@@ -103,36 +134,6 @@ class Login extends DBAbstractModel
 		unset($_SESSION["account"]);
 		$this->status = FALSE;
 
-	}
-
-	private function date()
-	{
-
-		$login_date = new Login_admin();
-		$login_date->browseDateCompany();
-		
-		$day = date("l");
-
-		if ( $day=="Monday" ) 		$day 	=	"LUNES";
-		if ( $day=="Tuesday" ) 		$day 	=	"MARTES";
-		if ( $day=="Wednesday" ) 	$day 	=	"MIERCOLES";
-		if ( $day=="Thursday" ) 	$day 	=	"JUEVES";
-		if ( $day=="Friday" ) 		$day 	=	"VIERNES";
-		if ( $day=="Saturday" ) 	$day 	=	"SABADO";
-		if ( $day=="Sunday" ) 		$day 	=	"DOMINGO";
-
-		$days_week = explode(",", $login_date->days);
-		$hour = date("H:i:s");
-		
-		foreach ( $days_week as $days) :
-
-			if ( $days == $day ) :
-				if ( ( $login_date->start_time < $hour ) && ( $hour < $login_date->end_time ) ) :
-					$this->browseUser();
-				endif;
-			endif;
-
-		endforeach;
 	}
 
 	// ENCRYPTING PASSWORD

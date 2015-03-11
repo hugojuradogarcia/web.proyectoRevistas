@@ -1,3 +1,16 @@
+<?php 
+// Validar Session
+require_once('../lib/status.php');
+
+$status = new Status();
+/* SESSION */
+if( !$status->state_admin() ) :
+	header( 'Location: actions/logout.php');
+endif;
+/* AUDITOR */
+$status->auditor( $_SERVER['SCRIPT_NAME'] , 'REGISTER ADMIN' );
+
+?>
 <?php
 
 require_once('../lib/usuarios_model.php');
@@ -164,87 +177,94 @@ endif;
 	<![endif]-->
 </head>
 <body>
-<div class="container">
-	<section>	
-		<h3>Carga de usuarios de forma masiva</h3>
-		<form action="" method="post" name="record-massive" enctype="multipart/form-data">
+<div class="col-md-12">
+	<div class="col-md-2">
+		<?php require('menu.php'); ?>
+	</div>
+	<div class="col-md-10">
 		
+		<section class="border-top">	
+			<h3>Carga de usuarios de forma masiva</h3>
+			<form action="" method="post" name="record-massive" enctype="multipart/form-data">
 			
-			<div id="example-file">
-				<h4>Ejemplo del formato <span class="badge">csv</span> a subir</h4>
-				<img src="img/registro/file_csv.png" alt="Ejemplo de archivo csv" class="img-responsive">
-			</div>
-			<label for="file">Seleccionar el archivo <span class="badge">csv</span></label>
-			<?php 	
-				echo $message_format;
-				echo $message; 
-			?>
-			<input type="file" name="file" id="file" class="btn btn-default"/>
-			<button type="submit" class="btn btn-info"><i class="fa fa-user-plus"></i>
-Subir archivo</button>
-			
-			
+				
+				<div id="example-file">
+					<h4>Ejemplo del formato <span class="badge">csv</span> a subir</h4>
+					<img src="img/registro/file_csv.png" alt="Ejemplo de archivo csv" class="img-responsive">
+				</div>
+				<label for="file">Seleccionar el archivo <span class="badge">csv</span></label>
+				<?php 	
+					echo $message_format;
+					echo $message; 
+				?>
+				<input type="file" name="file" id="file" class="btn btn-default"/>
+				<button type="submit" class="btn btn-primary"><i class="fa fa-user-plus"></i>
+	Subir archivo</button>
+				
+				
 
-		</form>
+			</form>
+			
+		</section>
 		
-	</section>
-
-	<section>
-		<h3>Carga de usuario de forma individual</h3>
-		<form action="registro.php" method="post" name="record-single" role="form">
-			
-			<div class="row">
-				<div class="col-md-4">
-					<label for="name">Nombre:</label>
-					<input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required  onkeyup="this.value=this.value.toUpperCase()">
-				</div>
+		<section class="border-top">
+			<h3>Carga de usuario de forma individual</h3>
+			<form action="registro.php" method="post" name="record-single" role="form">
 				
-				<div class="col-md-4">
-					<label for="last_name">Apellidos:</label>
-					<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" required  onkeyup="this.value=this.value.toUpperCase()">
-				</div>
-				
-				<div class="col-md-4">	
-					<label for="email">Email:</label>
-					<div class="input-group">
-						<span class="input-group-addon">@</span>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				
-				<div class="col-md-4">	
-					<label for="password">Contraseña:</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-				</div>
-				
-				<div class="col-md-4">
-					<label for="state">Estado:</label>
-					<div class="radio">
-						<label>
-							<input type="radio" id="state_enabled" name="state" value="ENABLED" checked required>
-							ENABLED
-						</label>
-					</div>
-				
-					<div class="radio">
-						<label>
-							<input type="radio" id="state_disabled" name="state" value="DISABLED" required>
-							DISABLED
-						</label>
+				<div class="row">
+					<div class="col-md-4">
+						<label for="name">Nombre:</label>
+						<input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required  onkeyup="this.value=this.value.toUpperCase()">
 					</div>
 					
+					<div class="col-md-4">
+						<label for="last_name">Apellidos:</label>
+						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" required  onkeyup="this.value=this.value.toUpperCase()">
+					</div>
+					
+					<div class="col-md-4">	
+						<label for="email">Email:</label>
+						<div class="input-group">
+							<span class="input-group-addon">@</span>
+							<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					
+					<div class="col-md-4">	
+						<label for="password">Contraseña:</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+					</div>
+					
+					<div class="col-md-4">
+						<label for="state">Estado:</label>
+						<div class="radio">
+							<label>
+								<input type="radio" id="state_enabled" name="state" value="ENABLED" checked required>
+								ENABLED
+							</label>
+						</div>
+					
+						<div class="radio">
+							<label>
+								<input type="radio" id="state_disabled" name="state" value="DISABLED" required>
+								DISABLED
+							</label>
+						</div>
+						
+
+					</div>
 
 				</div>
 
-			</div>
+				<button type="submit" class="btn btn-primary" name="submit-record-single"><i class="fa fa-user-plus"></i>
+	Crear Usuario</button>	
 
-			<button type="submit" class="btn btn-info" name="submit-record-single"><i class="fa fa-user-plus"></i>
-Crear Usuario</button>	
+			</form>
+		</section>
 
-		</form>
-	</section>
+	</div>
 </div>
 </body>
 </html>
